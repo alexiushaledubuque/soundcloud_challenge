@@ -1,25 +1,38 @@
+	// Add event listeners
+	const addEventListeners = () => {
+		document.getElementById('submit-btn').addEventListener('click', getSCtracks);
+	  // document.getElementById('hide_exp').addEventListener('click', hideExp);
+	}
+	
 	// SoundCloud Api Request
-	SC.initialize({
-		  client_id: 'b8248d692be930536efb3ac01d46199f'
-		});
+	const getSCtracks = () => {
+		console.log('running getSCtracks()')
+		SC.initialize({
+			  client_id: 'b8248d692be930536efb3ac01d46199f'
+			});
 
-		var page_size = 100;
-		SC.get('/tracks', { limit: page_size }).then((tracks) => {
-		  // first 100 tracks
-		  console.log(tracks.collection.length);
-		});
-
+		// find all sounds of buskers licensed under 'creative commons share alike'
 		SC.get('/tracks', {
-		  limit: page_size, linked_partitioning: 1
+		  q: document.getElementById('user-input').value
 		}).then((tracks) => {
-			
-			for (let i = 0; i < tracks.collection.length; i++){
-				let string = `${tracks.collection[i].title}<br><br>${tracks.collection[i].description}<br><br>`;
-				document.getElementById('sc').innerHTML += string;
-			}
-		   // console.log(JSON.stringify(tracks.collection[0], null, 4));
+			console.log('length: ', tracks.collection.length);
+		 //  for (let i = 0; i < tracks.collection.length; i++){
+			// 	let string = `${tracks.collection[i].title}<br><br>${tracks.collection[i].description}<br><br>`;
+			// 	document.getElementById('sc').innerHTML += string;
+			// }
 		});
 
+		// csApi.getData((response) => {
+	 // 		response.data.forEach((gif) => {
+	 // 			let pic = gif.images.fixed_height.url; 
+	 // 			let string = `<div class='giphys'><iframe src=${pic} scrolling="no" align="middle" 
+	 // 										width="200" height="170" seamless></iframe></div>`
+
+	 // 			document.getElementById('gify').innerHTML += string;
+	 // 		})
+	 // 	 // console.log(JSON.stringify(response.data[0], null, 4));
+	 // });
+	};
 
 // Giphy Api Request
 		var csApi = (function  () {
@@ -49,13 +62,4 @@
 		
 	 })();
 
-	 csApi.getData((response) => {
-	 		response.data.forEach((gif) => {
-	 			let pic = gif.images.fixed_height.url; 
-	 			let string = `<div class='giphys'><iframe src=${pic} scrolling="no" align="middle" 
-	 										width="200" height="170" seamless></iframe></div>`
-
-	 			document.getElementById('gify').innerHTML += string;
-	 		})
-	 	 // console.log(JSON.stringify(response.data[0], null, 4));
-	 });
+	 addEventListeners();
