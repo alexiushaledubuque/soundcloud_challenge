@@ -13,6 +13,7 @@ const addEventListeners = () => {
 const clearFields = () => {
     document.getElementById('user_input').value = '';
     document.getElementById('user_input').focus();
+    document.getElementById('display').innerHTML = '';
 }
 
 const getUserInput = () => {
@@ -45,7 +46,7 @@ const jsonp = (url, cb) => {
     document.body.appendChild(script);
 }
 
-// Fetching data from api.meetup.com
+// Fetching data from api.soundcloud.com
 const getApiData = (textInput) => {
     
     if (!textInput) {
@@ -59,16 +60,23 @@ const getApiData = (textInput) => {
         
     } else {
         // Format user input as expected for api request
-        // textInput = textInput.replace(/\s/gi, '+');
+        textInput = textInput.replace(/\s/gi, '+');
 
         // Build URL
         let url = buildUrl(textInput);
 
         // API Service
         jsonp(url, (tracks) => {
-        	console.log(JSON.stringify(tracks, null, 4));
+        	// tracks.collection.forEach((track) => {
+        	// 	let string = ``
+        	// 	document.getElementById('sc').innerHTML
+        	// })
+        	console.log(JSON.stringify(tracks.collection[0], null, 4));
         });
     }
+    // gfApi.getData((data) => {
+    // 	console.log(data[0]);
+    // });
 }
 
 // http://api.soundcloud.com/search?q=Prince&client_id=7d2a254767bd1fededc0ff2867c94419
@@ -79,31 +87,31 @@ const getApiData = (textInput) => {
 	 
 
 // Giphy Api Request
-		// const gfApi = (() => {
+		const gfApi = (() => {
 
-	 //  let api = {},
-	 //      baseUrl = 'http://api.giphy.com',
-	 //      path = '/v1/gifs/search',
-	 //      q = 'Religion+&+Spirituality'
-	 //      api_key = 'dc6zaTOxFJmzC';
+	  let api = {},
+	      baseUrl = 'http://api.giphy.com',
+	      path = '/v1/gifs/search',
+	      q = 'Religion+&+Spirituality'
+	      api_key = 'dc6zaTOxFJmzC';
 
-	 //  api.getData = function(callback) {
-	 //    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
-	 //    request = new XMLHttpRequest();
-	 //    request.open('get', requestUrl, true);
-	 //    request.onload = function(e) {
-	 //      var response = request.response;
-	 //      response = JSON.parse(response);
-	 //      callback(response);
-	 //    };
-	 //    request.onerror = function(e) {
-	 //      callback(request.response, e);
-	 //    };
-	 //    request.send();
-	 //  };
+	  api.getData = function(callback) {
+	    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
+	    request = new XMLHttpRequest();
+	    request.open('get', requestUrl, true);
+	    request.onload = function(e) {
+	      var response = request.response;
+	      response = JSON.parse(response);
+	      callback(response);
+	    };
+	    request.onerror = function(e) {
+	      callback(request.response, e);
+	    };
+	    request.send();
+	  };
 	  
-	 //  return api;
+	  return api;
 		
-	 // })();
+	 });
 
 	 addEventListeners();
