@@ -1,65 +1,109 @@
-	// Add event listeners
-	const addEventListeners = () => {
-		document.getElementById('submit-btn').addEventListener('click', getSCtracks);
-	  // document.getElementById('hide_exp').addEventListener('click', hideExp);
-	}
+// Event listener for the "Enter" key on both input fields (text & zip code)
+const handleKeyPress = (e) => {
+   getUserInput();
+}
+
+// Add event listeners
+const addEventListeners = () => {
+	document.getElementById('submit_btn').addEventListener('click', handleKeyPress);
+  // document.getElementById('hide_exp').addEventListener('click', hideExp);
+}
+
+// Clear input fields and reset focus for next user input request
+const clearFields = () => {
+    document.getElementById('user_input').value = '';
+    document.getElementById('user_input').focus();
+}
+
+const getUserInput = () => {
+    let userInput = document.getElementById('user_input').value
+            
+    // Reset fields after input received
+    clearFields(); 
+
+    // Format & get data from meetup api
+    getApiData(userInput);
+}
+
+// Create the url for JSONP
+const buildUrl = (textInput) => {
+    return `http://api.soundcloud.com/search?q=${textInput}&client_id=7d2a254767bd1fededc0ff2867c94419`;
+}
+
+// JSONP uses a script to fetch the data from api.meetup.com
+const jsonp = (url, cb) => {
+
+    let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
+    window[cbName] = (response) => {
+        delete window[cbName];
+        document.body.removeChild(script);
+        cb(response);
+    };
+
+    let script = document.createElement('script');
+    script.src = `${url}${(url.indexOf('?') >= 0 ? '&' : '?')}callback=${cbName}`;
+    document.body.appendChild(script);
+}
+
+// Fetching data from api.meetup.com
+const getApiData = (textInput) => {
+    
+    if (!textInput) {
+        // View the error message for 2 seconds before the field is reset
+        window.setTimeout(() => {
+            clearFields();
+        }, 2000)
+
+        // Alert user input is required to proceed
+        document.getElementById('display').innerHTML = `<h4>USER INPUT REQUIRED!</h4>`;
+        
+    } else {
+        // Format user input as expected for api request
+        // textInput = textInput.replace(/\s/gi, '+');
+
+        // Build URL
+        let url = buildUrl(textInput);
+
+        // API Service
+        jsonp(url, (tracks) => {
+        	console.log(JSON.stringify(tracks, null, 4));
+        });
+    }
+}
+
+// http://api.soundcloud.com/search?q=Prince&client_id=7d2a254767bd1fededc0ff2867c94419
+// url + path + ? + q + &client_id
+
+// SoundCloud Api Request
 	
-	// SoundCloud Api Request
-	const getSCtracks = () => {
-		console.log('running getSCtracks()')
-		SC.initialize({
-			  client_id: 'b8248d692be930536efb3ac01d46199f'
-			});
-
-		// find all sounds of buskers licensed under 'creative commons share alike'
-		SC.get('/tracks', {
-		  q: document.getElementById('user-input').value
-		}).then((tracks) => {
-			console.log('length: ', tracks.collection.length);
-		 //  for (let i = 0; i < tracks.collection.length; i++){
-			// 	let string = `${tracks.collection[i].title}<br><br>${tracks.collection[i].description}<br><br>`;
-			// 	document.getElementById('sc').innerHTML += string;
-			// }
-		});
-
-		// csApi.getData((response) => {
-	 // 		response.data.forEach((gif) => {
-	 // 			let pic = gif.images.fixed_height.url; 
-	 // 			let string = `<div class='giphys'><iframe src=${pic} scrolling="no" align="middle" 
-	 // 										width="200" height="170" seamless></iframe></div>`
-
-	 // 			document.getElementById('gify').innerHTML += string;
-	 // 		})
-	 // 	 // console.log(JSON.stringify(response.data[0], null, 4));
-	 // });
-	};
+	 
 
 // Giphy Api Request
-		var csApi = (function  () {
+		// const gfApi = (() => {
 
-	  var api = {},
-	      baseUrl = 'http://api.giphy.com',
-	      path = '/v1/gifs/search',
-	      q = 'Religion+&+Spirituality'
-	      api_key = 'dc6zaTOxFJmzC';
+	 //  let api = {},
+	 //      baseUrl = 'http://api.giphy.com',
+	 //      path = '/v1/gifs/search',
+	 //      q = 'Religion+&+Spirituality'
+	 //      api_key = 'dc6zaTOxFJmzC';
 
-	  api.getData = function(callback) {
-	    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
-	    request = new XMLHttpRequest();
-	    request.open('get', requestUrl, true);
-	    request.onload = function(e) {
-	      var response = request.response;
-	      response = JSON.parse(response);
-	      callback(response);
-	    };
-	    request.onerror = function(e) {
-	      callback(request.response, e);
-	    };
-	    request.send();
-	  };
+	 //  api.getData = function(callback) {
+	 //    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
+	 //    request = new XMLHttpRequest();
+	 //    request.open('get', requestUrl, true);
+	 //    request.onload = function(e) {
+	 //      var response = request.response;
+	 //      response = JSON.parse(response);
+	 //      callback(response);
+	 //    };
+	 //    request.onerror = function(e) {
+	 //      callback(request.response, e);
+	 //    };
+	 //    request.send();
+	 //  };
 	  
-	  return api;
+	 //  return api;
 		
-	 })();
+	 // })();
 
 	 addEventListeners();
