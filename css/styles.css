@@ -1,0 +1,107 @@
+body {
+	background: url(piano.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container {
+	margin: auto;
+	height: 500px;
+	width: 100%;
+	font-family: Bouquet;
+	text-align: left;
+}
+
+h2 {
+	color: #E952F0;
+}
+
+#list_title {
+	text-align: left;
+	font-weight: bold;
+}
+
+/* Specific styles of user input
+   ========================================================================== */
+#user-input {
+    height:70px;
+    padding-left: 10px;
+    border-color: #F7F2FE;
+    border-radius: 5px;
+    float: left;
+}
+
+/* Used to resize the default input field size
+   ========================================================================== */
+#user-input[placeholder] {
+    font-size:40px;
+}
+
+#sc {
+	margin: auto;
+	background-color: blue;
+	display: none;
+}
+
+#mood_tracks {
+	margin-left: 2px;
+	display: none;
+}
+
+#users {
+	background-color: green;
+	display: none;
+}
+
+#favoriters {
+	background-color: purple;
+	text-align: center;
+	display: none;
+}
+
+#sc, #users, #favoriters {
+	height: 500px;
+	width: 400px;
+	color: white;
+	border: 2px solid purple;
+	overflow-y: scroll;
+}
+
+iframe {
+	border-radius: 50px;
+}
+
+/*#fav_users_list {
+	text-align: center;
+}*/
+
+li {
+	list-style: none;
+}
+
+table {
+	margin: auto;
+}
+
+/* unvisited link */
+a:link {
+    color: #F3E7F9;
+}
+
+/* visited link */
+a:visited {
+    color: #CCCBCC;
+}
+
+/* mouse over link */
+a:hover {
+    color: #2EFAE2;
+}
+
+/* selected link */
+a:active {
+    color: #3EE745;
+}
+
