@@ -1,0 +1,5 @@
+### Mocha/Chai testing components ###
+lib/
+
+### OSX ###
+.DS_Store
