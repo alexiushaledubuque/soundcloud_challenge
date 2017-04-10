@@ -31,6 +31,16 @@ const clearFields = () => {
     document.getElementById('display').innerHTML = '';
 }
 
+// Display the spinner before JSONP request
+const startSpinner = () =>  {
+    document.getElementById("loader").style.visibility = "visible";
+}
+
+// Hide the spinner before rendering the data to the dom
+const stopSpinner = () => {
+    document.getElementById("loader").style.visibility = "hidden";
+}
+
 const getUserInput = () => {
     let userInput = document.getElementById('user_input').value
             
@@ -61,6 +71,8 @@ const buildUrl = (url, endPoint, textInput, uID) => {
 // JSONP uses a script to fetch the data from api.soundcloud.com
 const jsonp = (url, cb) => {
 
+    // Start the spinner immediately before the api request
+    startSpinner();
     let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
     window[cbName] = (response) => {
         delete window[cbName];
@@ -94,8 +106,8 @@ const getSCApiData = (textInput) => {
 
          // SC API Service
         jsonp(url, (tracks) => {
-            tracks.collection.length > 0 ? listTracks(tracks) : document.getElementById('display').innerHTML = 
-                `<h4>No Groups Found!</h4>`;
+            tracks.collection.length > 0 ? (stopSpinner(), listTracks(tracks)) : (document.getElementById('display').innerHTML = 
+                `<h4>No Groups Found!</h4>`, stopSpinner());
         });
     }    
 }
@@ -108,8 +120,8 @@ const getUserTracks = (userid) => {
 
     jsonp(url, (userTracks) => {
         console.log(userTracks);
-        userTracks.length > 0 ? ulistTracks(userTracks) : document.getElementById('display').innerHTML = 
-                `<h4>No Groups Found!</h4>`;
+        userTracks.length > 0 ? (stopSpinner(), ulistTracks(userTracks)) : (document.getElementById('display').innerHTML = 
+                `<h4>No Groups Found!</h4>`, stopSpinner());
     });
 }
 
@@ -122,8 +134,8 @@ const getFavoriters = (trackid) => {
 
     jsonp(url, (favoriters) => {
         console.log(favoriters);
-        favoriters.length > 0 ? favoriteUsers(trackid, favoriters) : document.getElementById('display').innerHTML = 
-                `<h4>No Favoriters!</h4>`;
+        favoriters.length > 0 ? (stopSpinner(), favoriteUsers(trackid, favoriters)) : (document.getElementById('display').innerHTML = 
+                `<h4>No Favoriters!</h4>`, stopSpinner());
     });
 }
 
@@ -134,11 +146,11 @@ const sortByProp = (prop1, prop2) => {
       }else if( a[prop1] < b[prop1] ){
           return -1;
       }
-      // if( a[prop2] > b[prop2]){
-      //     return 1;
-      // }else if( a[prop2] < b[prop2] ){
-      //     return -1;
-      // }
+      if( a[prop2] > b[prop2]){
+          return 1;
+      }else if( a[prop2] < b[prop2] ){
+          return -1;
+      }
       return 0;
    }
 }
