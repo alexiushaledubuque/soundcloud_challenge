@@ -127,29 +127,30 @@ const getFavoriters = (trackid) => {
     });
 }
 
-const sortByProp = ((prop1, prop2) => {
-   ((a,b) => {
+const sortByProp = (prop1, prop2) => {
+   return function(a,b){
       if( a[prop1] > b[prop1]){
           return 1;
       }else if( a[prop1] < b[prop1] ){
           return -1;
       }
-      if( a[prop2] > b[prop2]){
-          return 1;
-      }else if( a[prop2] < b[prop2] ){
-          return -1;
-      }
+      // if( a[prop2] > b[prop2]){
+      //     return 1;
+      // }else if( a[prop2] < b[prop2] ){
+      //     return -1;
+      // }
       return 0;
-   })
-});
+   }
+}
 
 const favoriteUsers = (track, favList) => {
     let favoredTrack = '',
         string = '';
 
+    // console.log('Pre Sort List: \n', favList);
     // Sorts the response data according to given properties
     favList.sort(sortByProp('followers_count', 'last_name'));
-    // console.log('Sorted List: \n', JSON.stringify(favList[0], null, 4));
+    // console.log('Sorted List: \n', favList);
 
     document.getElementById('fav_users_list').innerHTML = '';
     // console.log('User Track List: \n', JSON.stringify(userTrackList[0], null, 4));
@@ -201,7 +202,7 @@ const listTracks = (tracks) => {
     let string = '';
     document.getElementById('tracklist').innerHTML = '';
 
-    console.log(`length of data: ${tracks.collection.length}`);
+    // console.log(`length of data: ${tracks.collection.length}`);
 
     try {
         tracks.collection.forEach((track) => {
@@ -238,7 +239,6 @@ const css = (selector, property, value) => {
 }
 
 const show = (selector) => {
-    // debugger;
     css(selector, 'display', 'block');
 }
 

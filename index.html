@@ -13,37 +13,47 @@
 	<div class=container>
 		<div id=inputSection>
 			<h1>Hey my friend, how ya feeling today?</h1>
-			<h3>Let's find some "Mood-Music"!<br>
-					In one word, tell me how you feel
-			</h3>
-
-			<div>
-				<input id='user_input' type='text' maxlength='60' placeholder='ex. Rock & Roll' autofocus>
-				<button id='submit_btn' class='color-option'>Fetch Tracks</button>	
-				<div id='display'></div>
-			</div>
+			<h2>
+				<table>
+					<tbody>
+						<tr>
+							<td>Let's find some tracks that suits your mood today!</td>
+						</tr>
+						<tr>
+							<td>In one word, tell me how you feel</td>
+						</tr>
+						<tr>
+							<td>
+								<input id='user_input' type='text' maxlength='60' placeholder='ex. happy/sad/anxious' autofocus>	
+								<button id='submit_btn' class='color-option'>Fetch Tracks</button>
+							</td>
+						</tr>
+						<tr>
+							<div id='display'></div>
+						</tr>
+					</tbody>
+				</table>
+			</h2>
 		</div>
 		<table>
 			<tbody>
 				<tr>
 					<th>
 						<div id='sc'>
-						<h2 id=mood_tracks>Here are some songs to fit your mood
-							<h4>click to view tracks for user</h4>
-						</h2>
-						<ul id='tracklist'></ul>
-						<!-- track title & username -->
+							<h2 id=mood_tracks>Here are some tracks according to your mood search
+								<h4>click a track to see more tracks from this user</h4>
+							</h2>
+							<ul id='tracklist'></ul>
 						</div>				
 					</th>
 					<th>
 						<div id=users>
-							<!-- <button class='hide'>X</button><br> -->
 							<ul id='user_tracks_list'></ul>
 						</div>				
 					</th>
 					<th>
 						<div id=favoriters>
-							<!-- <button class='hide'>X</button><br> -->
+							<h4></h4>
 							<ul id='fav_users_list'></ul>
 						</div>
 					</th>
@@ -57,89 +67,3 @@
 	<script src='js/script.js'></script>
 </body>
 </html>
-
-<!-- 
-<h4>If you're not sure, choose from my list of common moods</h4>
-		<select name="" multiple>
-			<option value="">Aggravated</option>
-			<option value="">Amused</option>
-			<option value="">Angry</option>
-			<option value="">Annoyed</option>
-			<option value="">Anxious</option>
-			<option value="">Apathetic</option>
-			<option value="">Bewildered</option>
-			<option value="">Blissful</option>
-			<option value="">Bouncy</option>
-			<option value="">Calm</option>
-			<option value="">Cheerful</option>
-			<option value="">Complacent</option>
-			<option value="">Content</option>
-			<option value="">Cranky</option>
-			<option value="">Crappy</option>
-			<option value="">Crazy</option>
-			<option value="">Curious</option>
-		</select>
-
-Cynical
-Depressed
-Devious
-Disappointed
-Discontent
-Ditzy
-Dreamy
-Ecstatic
-Energetic
-Enraged
-Enthralled
-Envious
-Excited
-Flirty
-Frustrated
-Giddy
-Giggly
-Gloomy
-Good
-Grateful
-Grumpy
-Guilty
-Happy
-High
-Hopeful
-Impressed
-Indifferent
-Infuriated
-Irate
-Irritated
-Joyful
-Jubilant
-Lazy
-Lethargic
-Listless
-Lonely
-Loving
-Mad
-Melancholy
-Mellow
-Mischievous
-Mournful
-Optimistic
-Peaceful
-Pessimistic
-Pleased
-Rejected
-Rejuvenated
-Relieved
-Restless
-Sad
-Satisfied
-Shocked
-Silly
-Smart
-Stressed
-Surprised
-Sympathetic
-Thankful
-Uncomfortable
-Weird
-
-Read more at http://examples.yourdictionary.com/mood-examples.html#hKCzGR2G3avmJyUO.99 -->

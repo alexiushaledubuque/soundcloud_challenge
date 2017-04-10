@@ -10,7 +10,6 @@ body {
 	margin: auto;
 	height: 500px;
 	width: 100%;
-	font-family: Bouquet;
 	text-align: left;
 }
 
@@ -25,19 +24,21 @@ h1 {
 }
 
 h2 {
-	color: #E952F0;
+	font-family: courier;
+	text-align: center;
+}
+
+h4 {
+	text-align: center;
 }
 
 /* Fetch button styles
    ========================================================================== */
 button {
 	font-family: 'Sofia';
-	font-size: 1.4em;
   border-radius: 5px;
   color: #FCFBFB;
-  background-color: #9F0BF4;
-  width: 150px;
-  height: 35px;
+  background-color: #D5712F;
 }
 
 #list_title {
@@ -48,7 +49,7 @@ button {
 /* Specific styles of user input
    ========================================================================== */
 #user-input {
-    height:70px;
+    height:35px;
     padding-left: 10px;
     border-color: #F7F2FE;
     border-radius: 5px;
@@ -58,7 +59,7 @@ button {
 /* Used to resize the default input field size
    ========================================================================== */
 #user-input[placeholder] {
-    font-size:40px;
+    font-size:10px;
 }
 
 #inputSection {
@@ -68,41 +69,40 @@ button {
 
 #sc {
 	margin: auto;
-	background-color: blue;
 	display: none;
 }
 
 #mood_tracks {
 	margin-left: 2px;
 	display: none;
+	color: #FA8334;
+	font-weight: bolder;
 }
 
 #users {
-	background-color: green;
+	background-color: #5AFB4A;
 	display: none;
 }
 
 #favoriters {
-	background-color: purple;
+	background-color: #FFB35C;
 	text-align: center;
 	display: none;
 }
 
 #sc, #users, #favoriters {
-	height: 500px;
+	height: 400px;
 	width: 400px;
-	color: white;
-	border: 2px solid purple;
+	color: black;
+	border: 2px solid #FB6D4A;
+	opacity: .79;
 	overflow-y: scroll;
+	background-color: #FDFDFD;
 }
 
 iframe {
 	border-radius: 50px;
 }
-
-/*#fav_users_list {
-	text-align: center;
-}*/
 
 li {
 	list-style: none;
@@ -113,22 +113,22 @@ table {
 }
 
 /* unvisited link */
-a:link {
+a:link, li:link {
     color: #F3E7F9;
 }
 
 /* visited link */
-a:visited {
+a:visited, li:visited {
     color: #CCCBCC;
 }
 
 /* mouse over link */
-a:hover {
+a:hover, li:hover {
     color: #2EFAE2;
 }
 
 /* selected link */
-a:active {
+a:active, li:active {
     color: #3EE745;
 }
 
