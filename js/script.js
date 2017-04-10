@@ -1,3 +1,4 @@
+//
 const apiObject = (() => {
     return scApiObject = {
         sc: 'http://api.soundcloud.com',
@@ -73,6 +74,7 @@ const jsonp = (url, cb) => {
 
     // Start the spinner immediately before the api request
     startSpinner();
+
     let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
     window[cbName] = (response) => {
         delete window[cbName];
@@ -112,6 +114,7 @@ const getSCApiData = (textInput) => {
     }    
 }
 
+// Fetching more tracks from a specific user
 const getUserTracks = (userid) => {
     // Build URL
     let url = buildUrl(apiObject.sc, apiObject.userTracks, '', userid);
@@ -125,11 +128,12 @@ const getUserTracks = (userid) => {
     });
 }
 
+// Fetching favoriters of a specific track
 const getFavoriters = (trackid) => {
     // let url = 'http://api.soundcloud.com/tracks/35193992/favoriters?client_id=d6i0wruU7ddayTqrhwszluW0i9aNBlb1';
     let url = buildUrl(apiObject.sc, apiObject.favorites, '', trackid);
 
-    console.log('favoriters url: ', url);
+    // console.log('favoriters url: ', url);
     // console.log('favoriters uri: ', uri);
 
     jsonp(url, (favoriters) => {
@@ -139,6 +143,7 @@ const getFavoriters = (trackid) => {
     });
 }
 
+// Sort favoriters according to  follower_count & last_name
 const sortByProp = (prop1, prop2) => {
    return function(a,b){
       if( a[prop1] > b[prop1]){
@@ -168,7 +173,7 @@ const favoriteUsers = (track, favList) => {
     // console.log('User Track List: \n', JSON.stringify(userTrackList[0], null, 4));
 
     try {
-            favoredTrack = `<h2>${favList.length}&nbspUsers Favored Track:&nbsp${track}</h2><br>`;
+            favoredTrack = `<div class=col_header><h2>${favList.length}&nbspUsers Favored Track:&nbsp${track}</h2></div><br>`;
             favList.forEach((fav) => {
                 // debugger; 
                 string += `<li><div class='f_user'><iframe src= ${fav.avatar_url} scrolling="no" 
@@ -189,17 +194,23 @@ const ulistTracks = (userTrackList) => {
         string = '';
     document.getElementById('user_tracks_list').innerHTML = '';
     // console.log('User Track List: \n', JSON.stringify(userTrackList[0], null, 4));
+    // artwork_url
 
     try {
-        user = `<h2>${userTrackList[0].user.username}'s Tracks</h2><br>`;
+        user = `<div class=col_header><h2>${userTrackList[0].user.username}'s Tracks</h2></div><br>`;
         userTrackList.forEach((item) => {
             // debugger;
             string += `<li onclick='getFavoriters(${item.id})'>Track Title:&nbsp&nbsp ${item.title}<br>`;
             if (item.tag_list) {
                 string += `tags:&nbsp<em>${item.tag_list}</em><br></li><br>`;
-            } else {
-                string += `</li><br>`;
-            }
+            } 
+
+            string += `<iframe src= ${item.artwork_url} scrolling="no" 
+                align="middle" width="100" height="70" seamless></iframe></li><br>`;
+
+            // else {
+            //     string += `</li><br>`;
+            // }
             // console.log('Track Details: \n', JSON.stringify(track.title, null, 4));
         })
         document.getElementById('user_tracks_list').innerHTML += `${user}${string}`;  
@@ -261,29 +272,29 @@ const hide = (selector) => {
 addEventListeners();
 
 // Giphy Api Request
-		// const gfApi = (() => {
+	// const gfApi = (() => {
 
-	 //  let api = {},
-	 //      baseUrl = 'http://api.giphy.com',
-	 //      path = '/v1/gifs/search',
-	 //      q = 'Religion+&+Spirituality'
-	 //      api_key = 'dc6zaTOxFJmzC';
+ //  let api = {},
+ //      baseUrl = 'http://api.giphy.com',
+ //      path = '/v1/gifs/search',
+ //      q = 'Religion+&+Spirituality'
+ //      api_key = 'dc6zaTOxFJmzC';
 
-	 //  api.getData = function(callback) {
-	 //    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
-	 //    request = new XMLHttpRequest();
-	 //    request.open('get', requestUrl, true);
-	 //    request.onload = function(e) {
-	 //      var response = request.response;
-	 //      response = JSON.parse(response);
-	 //      callback(response);
-	 //    };
-	 //    request.onerror = function(e) {
-	 //      callback(request.response, e);
-	 //    };
-	 //    request.send();
-	 //  };
-	  
-	 //  return api;
-		
-	 // });
+ //  api.getData = function(callback) {
+ //    requestUrl = baseUrl + path + '?q=' + q + '&api_key=' + api_key;
+ //    request = new XMLHttpRequest();
+ //    request.open('get', requestUrl, true);
+ //    request.onload = function(e) {
+ //      var response = request.response;
+ //      response = JSON.parse(response);
+ //      callback(response);
+ //    };
+ //    request.onerror = function(e) {
+ //      callback(request.response, e);
+ //    };
+ //    request.send();
+ //  };
+  
+ //  return api;
+	
+ // });

@@ -100,6 +100,12 @@ button {
 	background-color: #FDFDFD;
 }
 
+.col_header {
+	color: #FA8334;
+	font-weight: bolder;
+	/*position: absolute;*/
+}
+
 iframe {
 	border-radius: 50px;
 }
