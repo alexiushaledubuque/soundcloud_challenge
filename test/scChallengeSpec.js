@@ -27,6 +27,7 @@ describe('Object', function() {
 		];
 
   	testObject.sort(sortByProp('first_name', 'last_name'));
+
     assert.deepEqual(testObject, results, 'Object should equal results object');
   }); 
 
@@ -36,6 +37,7 @@ describe('Object', function() {
 
   it('Server response should contain data - length greater than 0', function () {
   	  url = 'http://api.soundcloud.com/search?q=Prince&client_id=7d2a254767bd1fededc0ff2867c94419';
+  	 
   	 // SC API Service
   	 try {
   	 	jsonpTester(url, (tracks) => {
