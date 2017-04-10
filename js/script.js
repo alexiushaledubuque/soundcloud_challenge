@@ -142,6 +142,7 @@ const sortByProp = (prop1, prop2) => {
       } else if( a[prop1] < b[prop1] ){
           return -1;
       }
+      
       if( a[prop2] > b[prop2]){
           return 1;
       } else if( a[prop2] < b[prop2] ){
