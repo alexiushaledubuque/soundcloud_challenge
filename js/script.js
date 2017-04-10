@@ -17,8 +17,14 @@ const handleKeyPress = (e) => {
 
 // Add event listeners
 const addEventListeners = () => {
-    document.getElementById('submit_btn').addEventListener('click', getUserInput);
-    document.getElementById('user_input').addEventListener('keypress', handleKeyPress);
+
+    if (document.getElementById('submit_btn')) {
+        document.getElementById('submit_btn').addEventListener('click', getUserInput);    
+    }
+
+    if (document.getElementById('user_input')) {
+        document.getElementById('user_input').addEventListener('keypress', handleKeyPress);
+    }  
 }
 
 // Clear input fields and reset focus for next user input request
@@ -125,9 +131,7 @@ const getUserTracks = (userid) => {
 
 // Fetching favoriters of a specific track
 const getFavoriters = (trackid) => {
-   
     let url = buildUrl(apiObject.sc, apiObject.favorites, '', trackid);
-
     jsonp(url, (favoriters) => {
         favoriters.length > 0 ? (stopSpinner(), favoriteUsers(trackid, favoriters)) : (document.getElementById('display').innerHTML = 
                 `<h4>No Favoriters!</h4>`, stopSpinner());
@@ -142,7 +146,7 @@ const sortByProp = (prop1, prop2) => {
       } else if( a[prop1] < b[prop1] ){
           return -1;
       }
-      
+
       if( a[prop2] > b[prop2]){
           return 1;
       } else if( a[prop2] < b[prop2] ){
@@ -187,7 +191,8 @@ const ulistTracks = (userTrackList) => {
     document.getElementById('user_tracks_list').innerHTML = '';
 
     try {
-        user = `<div class=col_header><h2>${userTrackList[0].user.username}'s Tracks</h2></div><br>`;
+        user = `<div class=col_header><h2>${userTrackList[0].user.username}'s Tracks</h2></div><br>
+        <h4>click to see who 'favorites' this track</h4>`;
         userTrackList.forEach((item) => {
             string += `<li onclick='getFavoriters(${item.id})'>Track Title:&nbsp&nbsp ${item.title}<br>`;
             if (item.tag_list) {

@@ -87,7 +87,7 @@ button {
 #favoriters {
 	background-color: #FFB35C;
 	text-align: center;
-	margin: 10px;
+	/*margin: 10px;*/
 	display: none;
 }
 

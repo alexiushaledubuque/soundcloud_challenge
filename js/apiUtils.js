@@ -27,3 +27,17 @@ const scApi = ( function () {
   
   return api;		
 });
+
+const jsonpTester = (url, cb) => {
+
+    let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
+    window[cbName] = (response) => {
+        delete window[cbName];
+        document.body.removeChild(script);
+        cb(response);
+    };
+
+    let script = document.createElement('script');
+    script.src = `${url}${(url.indexOf('?') >= 0 ? '&' : '?')}callback=${cbName}`;
+    document.body.appendChild(script);
+}
