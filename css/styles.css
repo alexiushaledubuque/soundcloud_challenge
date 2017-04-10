@@ -87,6 +87,7 @@ button {
 #favoriters {
 	background-color: #FFB35C;
 	text-align: center;
+	margin: 10px;
 	display: none;
 }
 
@@ -103,7 +104,10 @@ button {
 .col_header {
 	color: #FA8334;
 	font-weight: bolder;
-	/*position: absolute;*/
+}
+
+#fName {
+	color: black;
 }
 
 iframe {
@@ -120,17 +124,17 @@ table {
 
 /* unvisited link */
 a:link, li:link {
-    color: #F3E7F9;
+    color: #3B4CDE;
 }
 
 /* visited link */
 a:visited, li:visited {
-    color: #CCCBCC;
+    color: #7B7B7C;
 }
 
 /* mouse over link */
 a:hover, li:hover {
-    color: #2EFAE2;
+    color: #0FA223;
 }
 
 /* selected link */
