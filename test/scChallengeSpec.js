@@ -9,10 +9,6 @@ describe('Object', function() {
     assert.equal(typeof testObj, 'object', 'testObj was not type object');
   });
 
-  it('should have a jsonp function for api requests', function () {
-    assert.equal(typeof jsonp, 'function', 'jsop must exist for request');
-  });
-
   it('should sort the object based on 2 properties', function () {
   	let testObject = [
   		{ "first_name": "Ted", "last_name": "Baker" },
@@ -34,12 +30,22 @@ describe('Object', function() {
     assert.deepEqual(testObject, results, 'Object should equal results object');
   }); 
 
+  it('JSONP function should exist for api request', function() {
+  	expect(jsonp).to.exist;
+  })
+
   it('Server response should contain data - length greater than 0', function () {
   	  url = 'http://api.soundcloud.com/search?q=Prince&client_id=7d2a254767bd1fededc0ff2867c94419';
   	 // SC API Service
-      jsonpTester(url, (tracks) => {
-          assert.equal(tracks.length, 0, 'Server should return data');
+  	 try {
+  	 	jsonpTester(url, (tracks) => {
+  	 		console.log(tracks);
+        expect(tracks).to.be.ok;
       });
-  }) 
+  	 } catch (e) { 
+  	 		console.error(e);
+  	 }
+      
+  }); 
 
 });
