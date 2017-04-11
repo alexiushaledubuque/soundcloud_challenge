@@ -1,17 +1,5 @@
 # SoundCloud Internship Coding Challenge
 
-## Description
-	The purpose of this app is to search for tracks in SoundCloud based upon how the user is feeling or "their mood". Their input is matched in either the username, description, or title of the track in order to return that track in the results. The API has a limit of returning up to 50 items in the results. 
-
-	Once the tracks list is built, the elements are rendered to the dom and the div is no longer hidden. Each list item has an event listener which when clicked, will built a new list based upon that user's tracks. Event listeners on these items will invoke 1 additional API request to display all of the the users who've "favorited" the specific track. This last list is of only the users names and possible artwork if they have it. Their names are linked to their profile page in SoundCloud. 
-
-## Setup Installation
-
-	1.	Download and unzip the compressed file soundcloud_challenge.zip 
-	2.	Open the latest Chrome browser version 5.6 or higher
-	3.	In the Chrome browser, open the file index.html from the root directory to execute
-			a. File > Open File > index.html
-
 ## Challenge requirements
 
 	1.	Devise a fun way to use the Search Api. 
@@ -23,9 +11,25 @@
 			c. Integrate with giphy to find gifs to show instead of the track artwork
 	5.	Have Fun!
 
-### Additional features added:
-	1.	Scroll of list items
-	3.	Spinner/loader while data is retrieved from the api
+## Description
+	The purpose of this app is to search for tracks in SoundCloud based upon how the user is feeling or "their mood". Their input is matched in either the username, description, or title of the track in order to return that track in the results. The API has a limit of returning up to 50 items in the results. 
+
+	Once the tracks list is built, the elements are rendered to the dom and the div is no longer hidden. Each list item has an event listener which when clicked, will built a new list based upon that user's tracks. Event listeners on these items will invoke 1 additional API request to display all of the the users who've "favorited" the specific track. This last list is of only the users names and possible artwork if they have it. Their names are linked to their profile page in SoundCloud. 
+
+## Setup Installation/Execution
+
+	1.	Download and unzip the compressed file soundcloud_challenge.zip 
+	2.	Open either Chrome, Firefox, or Safari browser
+	3.	Open the file index.html from the root directory to execute
+			a. File > Open File > index.html
+
+### Features:
+	1.	Single Page Application
+	2.	Single point of input
+	3.	API results are formatted and displayed
+	4.	Scroll added on Y-axis for each list
+	5.	Spinner/loader while data is retrieved from the api
+	6.	
 
 ## Mocha/Chai Testing 
 	1.	I chose Mocha/Chai testing for it's ability to run tests in the browser.
@@ -60,8 +64,8 @@
 
 	4.	Pagination
 
-	5. Embed a player for the user track listing
+	5. Embed a player for the user track listing to play the track
 
-	6. Live chatting via Socket.io
+	6. Live chatting via Socket.io with other users currently in the system
 
 	7. Improved design to include carousel of giphys
