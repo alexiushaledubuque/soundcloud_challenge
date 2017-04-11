@@ -1,4 +1,4 @@
-const scApi = ( function () {
+const scApi = (function () {
 
 	console.log('input value: ', userInput);
 
@@ -26,7 +26,7 @@ const scApi = ( function () {
   };
   
   return api;		
-});
+})();
 
 const jsonpTester = (url, cb) => {
 

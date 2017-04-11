@@ -90,6 +90,36 @@ const jsonp = (url, cb) => {
     document.body.appendChild(script);
 }
 
+const scApi = (url, cb) => {
+    //debugger;
+
+  let api = {},
+      baseUrl = 'http://api.soundcloud.com',
+      path = '/search',
+      q = document.getElementById('user_input').value,
+      client_id = '7d2a254767bd1fededc0ff2867c94419';
+
+  api.getData = (callback) => {
+    //debugger;
+    requestUrl = url;
+    request = new XMLHttpRequest();
+    request.open('get', requestUrl, true);
+    request.onload = function(e) {
+      var response = request.response;
+      response = JSON.parse(response);
+      callback(response);
+    };
+    request.onerror = function(e) {
+      callback(request.response, e);
+    };
+    request.send();
+  };
+
+  api.getData(cb);
+  
+  return api;       
+};
+
 // Fetching tracks from api.soundcloud.com
 const getSCApiData = (textInput) => {
     
@@ -110,7 +140,12 @@ const getSCApiData = (textInput) => {
         let url = buildUrl(apiObject.sc, apiObject.search, textInput);
 
          // SC API Service
-        jsonp(url, (tracks) => {
+        // jsonp(url, (tracks) => {
+        //     tracks.collection.length > 0 ? (stopSpinner(), listTracks(tracks)) : (document.getElementById('display').innerHTML = 
+        //         `<h4>No Groups Found!</h4>`, stopSpinner());
+        // });
+
+        scApi(url, (tracks) => {
             tracks.collection.length > 0 ? (stopSpinner(), listTracks(tracks)) : (document.getElementById('display').innerHTML = 
                 `<h4>No Groups Found!</h4>`, stopSpinner());
         });
@@ -123,7 +158,7 @@ const getUserTracks = (userid) => {
     // Build URL
     let url = buildUrl(apiObject.sc, apiObject.userTracks, '', userid);
 
-    jsonp(url, (userTracks) => {
+    scApi(url, (userTracks) => {
         userTracks.length > 0 ? (stopSpinner(), ulistTracks(userTracks)) : (document.getElementById('display').innerHTML = 
                 `<h4>No Groups Found!</h4>`, stopSpinner());
     });
@@ -132,7 +167,7 @@ const getUserTracks = (userid) => {
 // Fetching favoriters of a specific track
 const getFavoriters = (trackid) => {
     let url = buildUrl(apiObject.sc, apiObject.favorites, '', trackid);
-    jsonp(url, (favoriters) => {
+    scApi(url, (favoriters) => {
         favoriters.length > 0 ? (stopSpinner(), favoriteUsers(trackid, favoriters)) : (document.getElementById('display').innerHTML = 
                 `<h4>No Favoriters!</h4>`, stopSpinner());
     });
