@@ -172,7 +172,7 @@ const favoriteUsers = (track, favList) => {
 
                 if (fav.artwork_url) {
                     string += `<iframe src=${fav.artwork_url} scrolling="no" align="middle" 
-                    width="100" height="70" seamless></iframe><br>`    
+                    width="100" height="100" seamless></iframe><br>`    
                 }; 
                 
                 string += `</div></li>`;
@@ -202,7 +202,7 @@ const ulistTracks = (userTrackList) => {
             // Only render artwork if it exists
             item.artwork_url ? 
                 string += `<iframe src=${item.artwork_url} scrolling="no" align="middle" 
-                width="100" height="70" seamless></iframe></li><br>` : string += `</li><br>`;
+                width="100" height="100" seamless></iframe></li><br>` : string += `</li><br>`;
         })
 
         document.getElementById('user_tracks_list').innerHTML += `${user}${string}`;  
@@ -228,7 +228,7 @@ const listTracks = (tracks) => {
                 // Only render artwork if it exists
                 track.artwork_url ? 
                     string += `<iframe src=${track.artwork_url} scrolling="no" align="middle" 
-                    width="100" height="70" seamless></iframe></li><br>` : string += `</li><br>`;
+                    width="100" height="100" seamless></iframe></li><br>` : string += `</li><br>`;
             }
         })
         show("#mood_tracks");

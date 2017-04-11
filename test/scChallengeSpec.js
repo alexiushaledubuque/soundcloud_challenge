@@ -41,13 +41,11 @@ describe('Object', function() {
   	 // SC API Service
   	 try {
   	 	jsonpTester(url, (tracks) => {
-  	 		console.log(tracks);
         expect(tracks).to.be.ok;
       });
   	 } catch (e) { 
   	 		console.error(e);
-  	 }
-      
+  	 }  
   }); 
 
 });
