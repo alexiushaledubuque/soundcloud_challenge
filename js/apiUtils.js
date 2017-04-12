@@ -13,8 +13,8 @@ const scApiTester = (url, cb) => {
       callback(response);
     };
     request.onerror = function(e) {
-        document.getElementById('display').innerHTML = e;
-      // callback(request.response, e);
+        // document.getElementById('display').innerHTML = e;
+      callback(request.response, e);
     };
     request.send();
   };
@@ -23,3 +23,12 @@ const scApiTester = (url, cb) => {
   
   return api;       
 };
+
+const clearFieldsTester = () => {
+    // document.getElementById('user_input').value = '';
+    // document.getElementById('user_input').focus();
+    // document.getElementById('sc').value = '';
+    // document.getElementById('fav_users_list').value = '';
+    // document.getElementById('user_tracks_list').value = '';
+    document.getElementById('display').value = '';
+}

@@ -5,18 +5,18 @@
     <link rel="stylesheet" href="lib/mocha/mocha.css">
   </head>
   <body>
-    <div id="mocha"></div>
+    <div id=display></div>
+
     <script src="lib/mocha/mocha.js"></script>
     <script src="lib/chai/chai.js"></script>
     <script>mocha.setup('bdd')</script>
 
-    <!-- load code you want to test here -->
+    <!-- Code to test -->
     <script src="js/script.js"></script>
     <script src="js/apiUtils.js"></script>
 
-    <!-- load your test files here -->
+    <!-- Test file -->
     <script src="test/scChallengeSpec.js"></script>
-    <!-- <script src="test/classNameTest.js"></script> -->
 
     <script>
       mocha.run();

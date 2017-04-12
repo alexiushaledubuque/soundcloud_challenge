@@ -3,13 +3,13 @@ var assert = chai.assert,
 		should = chai.should();
 
 describe('Object tests - exist & sorting', function() {
-  it('api object should exist on page load', function() {
+  it('api object should exist', function() {
     var testObj = apiObject;
 
-    assert.equal(typeof testObj, 'object', 'testObj was not type object');
-  });
+    expect(testObj).to.be.a('object');
+  })
 
-  it('should sort the object based on 2 properties', function () {
+  it('sorted object should deep equal preassigned object', function () {
   	let testObject = [
   		{ "first_name": "Ted", "last_name": "Baker" },
   		{ "first_name": "Sed", "last_name": "Andrews" },
@@ -27,39 +27,48 @@ describe('Object tests - exist & sorting', function() {
 		];
 
   	testObject.sort(sortByProp('first_name', 'last_name'));
-
-    assert.deepEqual(testObject, results, 'Object should equal results object');
-  }); 
-});
+    expect(testObject).to.deep.equal(results);
+  }) 
+})
 
 describe('XHR Request tests', function() {
   it('SCAPI function should exist for api request', function() {
   	expect(scApi).to.exist;
   })
 
-  it('Server response should contain data - length greater than 0', function () {
+  it('Object should contain data - length greater than 0', function () {
   	  url = 'http://api.soundcloud.com/search?q=Prince&client_id=7d2a254767bd1fededc0ff2867c94419';
   	 
   	 // SC API Service
   	 try {
   	 	scApiTester(url, (tracks) => {
         expect(tracks).to.be.ok;
+        expect(tracks).to.not.be.empty;
       });
   	 } catch (e) { 
   	 		console.error(e);
   	 }  
-  }); 
+  }) 
 
-  it('Server response should not contain data', function () {
-      url = 'http://api.soundcloud.com/search?q=hbansju&client_id=7d2a254767bd1fededc0ff2867c94419';
-     
-     // SC API Service
-     try {
-      scApiTester(url, (tracks) => {
-        assert.equal(tracks.length, 0, 'Query data should not exist').to.be.ok;
-      });
-     } catch (e) { 
-        console.error(e);
-     }  
-  });
-});
+  it('Space is replaced with endpoint in url', function() {
+    uID = '/search?q=';
+    url = 'http://api.soundcloud.com/ /Prince&client_id=7d2a254767bd1fededc0ff2867c94419';
+    url = url.replace(/\s/gi, uID);
+
+    expect(url).to.not.include(' ');
+  })
+})
+
+describe('DOM behavior', function() {
+  const newItem = document.getElementById('display');
+  it('should be able to add messages to the DOM', function() {
+    newItem.innerHTML = 'No tracks found!';
+    expect(newItem.length).to.not.equal(0);
+  })
+
+  it('should be able to remove messages from the DOM', function() {
+    newItem.innerHTML += 'Found new tracks for this user';
+    clearFieldsTester();
+    expect(newItem.children.length).to.equal(0);
+  })
+})

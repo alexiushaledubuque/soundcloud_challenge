@@ -1,4 +1,4 @@
-# SoundCloud Internship Coding Challenge
+# Internship Coding Challenge
 
 ## Challenge requirements
 1.	Devise a fun way to use the Search Api. 
@@ -11,13 +11,13 @@
 5.	Have Fun!
 
 ## App Description
-The purpose of this app is to search for tracks in SoundCloud based upon how the user is feeling or "their mood". Their input is matched in either the username, description, or title of the track in order to return that track in the results. The API has a limit of returning up to 50 items in the results. 
+The purpose of this app is to search for tracks in based upon how the user is feeling or "their mood". Their input is matched in either the username, description, or title of the track in order to return that track in the results. The API has a limit of returning up to 50 items in the results. 
 
-Once the tracks list is built, the elements are rendered to the dom and the div is no longer hidden. Each list item has an event listener which when clicked, will built a new list based upon that user's tracks. Event listeners on these items will invoke 1 additional API request to display all of the the users who've "favorited" the specific track. This last list is of only the users names and possible artwork if they have it. Their names are linked to their profile page in SoundCloud. 
+Once the tracks list is built, the elements are rendered to the dom and the div is no longer hidden. Each list item has an event listener which when clicked, will built a new list based upon that user's tracks. Event listeners on these items will invoke 1 additional API request to display all of the the users who've "favorited" the specific track. This last list contain only those users names and possible artwork if they have it. Their names are linked to their profile page in sc. 
 
 ## Setup Installation/Compatibility/Execution
-1.	Download and unzip the compressed file soundcloud_challenge.zip 
-2.	Open either Chrome, Firefox, or Safari browser
+1.	Download and unzip the compressed file sc_challenge.zip 
+2.	Open either Chrome, Firefox, or Safari browsers
 3.	Open the file index.html from the root directory to execute
 		a. File > Open File > index.html
 
