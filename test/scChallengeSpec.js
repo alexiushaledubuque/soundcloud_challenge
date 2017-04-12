@@ -2,7 +2,7 @@ var assert = chai.assert,
 		expect = chai.expect,
 		should = chai.should();
 
-describe('Object', function() {
+describe('Object tests - exist & sorting', function() {
   it('api object should exist on page load', function() {
     var testObj = apiObject;
 
@@ -30,9 +30,11 @@ describe('Object', function() {
 
     assert.deepEqual(testObject, results, 'Object should equal results object');
   }); 
+});
 
-  it('JSONP function should exist for api request', function() {
-  	expect(jsonp).to.exist;
+describe('XHR Request tests', function() {
+  it('SCAPI function should exist for api request', function() {
+  	expect(scApi).to.exist;
   })
 
   it('Server response should contain data - length greater than 0', function () {
@@ -40,7 +42,7 @@ describe('Object', function() {
   	 
   	 // SC API Service
   	 try {
-  	 	jsonpTester(url, (tracks) => {
+  	 	scApiTester(url, (tracks) => {
         expect(tracks).to.be.ok;
       });
   	 } catch (e) { 
@@ -48,4 +50,16 @@ describe('Object', function() {
   	 }  
   }); 
 
+  it('Server response should not contain data', function () {
+      url = 'http://api.soundcloud.com/search?q=hbansju&client_id=7d2a254767bd1fededc0ff2867c94419';
+     
+     // SC API Service
+     try {
+      scApiTester(url, (tracks) => {
+        assert.equal(tracks.length, 0, 'Query data should not exist').to.be.ok;
+      });
+     } catch (e) { 
+        console.error(e);
+     }  
+  });
 });

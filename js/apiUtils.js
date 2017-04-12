@@ -1,17 +1,10 @@
-const scApi = (function () {
-
-	console.log('input value: ', userInput);
-
-  let api = {},
-      baseUrl = 'http://api.soundcloud.com',
-      path = '/search',
-      q = document.getElementById('user_input').value,
-      client_id = '7d2a254767bd1fededc0ff2867c94419';
-
-      console.log('api: ', api);
+// XHR request to fetch the data from api.soundcloud.com
+const scApiTester = (url, cb) => {    
+  
+  let api = {};
 
   api.getData = (callback) => {
-    requestUrl = baseUrl + path + '?q=' + q + '&client_id=' + client_id;
+    requestUrl = url;
     request = new XMLHttpRequest();
     request.open('get', requestUrl, true);
     request.onload = function(e) {
@@ -20,24 +13,13 @@ const scApi = (function () {
       callback(response);
     };
     request.onerror = function(e) {
-      callback(request.response, e);
+        document.getElementById('display').innerHTML = e;
+      // callback(request.response, e);
     };
     request.send();
   };
+
+  api.getData(cb);
   
-  return api;		
-})();
-
-const jsonpTester = (url, cb) => {
-
-    let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
-    window[cbName] = (response) => {
-        delete window[cbName];
-        document.body.removeChild(script);
-        cb(response);
-    };
-
-    let script = document.createElement('script');
-    script.src = `${url}${(url.indexOf('?') >= 0 ? '&' : '?')}callback=${cbName}`;
-    document.body.appendChild(script);
-}
+  return api;       
+};

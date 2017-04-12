@@ -9,21 +9,23 @@ const apiObject = (() => {
     };
 })();
 
-// Event listener for the "Enter" key on both input fields (text & zip code)
+// Event listener for the "Enter" key on both input field
 const handleKeyPress = (e) => {
     let key = e.keyCode || e.which;
     if (key === 13) getUserInput();
 }
 
-// Add event listeners
+// Add event listeners to elements
 const addEventListeners = () => {
+    let submit = document.getElementById('submit_btn'),
+        query = document.getElementById('user_input');
 
-    if (document.getElementById('submit_btn')) {
-        document.getElementById('submit_btn').addEventListener('click', getUserInput);    
+    if (submit) {
+        submit.addEventListener('click', getUserInput);    
     }
 
-    if (document.getElementById('user_input')) {
-        document.getElementById('user_input').addEventListener('keypress', handleKeyPress);
+    if (query) {
+        query.addEventListener('keypress', handleKeyPress);
     }  
 }
 
@@ -34,30 +36,19 @@ const clearFields = () => {
     document.getElementById('sc').value = '';
     document.getElementById('fav_users_list').value = '';
     document.getElementById('user_tracks_list').value = '';
-    document.getElementById('display').innerHTML = '';
+    document.getElementById('display').value = '';
 }
 
-// Display the spinner before JSONP request
-const startSpinner = () =>  {
-    document.getElementById("loader").style.visibility = "visible";
-}
-
-// Hide the spinner before rendering the data to the dom
-const stopSpinner = () => {
-    document.getElementById("loader").style.visibility = "hidden";
-}
-
+// Getting the input the user entered in the input field
 const getUserInput = () => {
     let userInput = document.getElementById('user_input').value
             
-    // Reset fields after input received
     clearFields(); 
 
     getSCApiData(userInput);
-    // gfApi(userInput);
 }
 
-// Create the url for JSONP
+// Create the url for the API request
 const buildUrl = (url, endPoint, textInput, uID) => {
 
     if (endPoint === apiObject.search) {
@@ -72,35 +63,15 @@ const buildUrl = (url, endPoint, textInput, uID) => {
     return url;
 }
 
-// JSONP uses a script to fetch the data from api.soundcloud.com
-const jsonp = (url, cb) => {
+// XHR request to fetch the data from api.soundcloud.com
+const scApi = (url, cb) => {    
+  
+  // Start the spinner immediately before the request
+    startSpinner();  
 
-    // Start the spinner immediately before the api request
-    startSpinner();
-
-    let cbName = `jsonp_cb_${Math.round(100000 * Math.random())}`;
-    window[cbName] = (response) => {
-        delete window[cbName];
-        document.body.removeChild(script);
-        cb(response);
-    };
-
-    let script = document.createElement('script');
-    script.src = `${url}${(url.indexOf('?') >= 0 ? '&' : '?')}callback=${cbName}`;
-    document.body.appendChild(script);
-}
-
-const scApi = (url, cb) => {
-    //debugger;
-
-  let api = {},
-      baseUrl = 'http://api.soundcloud.com',
-      path = '/search',
-      q = document.getElementById('user_input').value,
-      client_id = '7d2a254767bd1fededc0ff2867c94419';
+  let api = {};
 
   api.getData = (callback) => {
-    //debugger;
     requestUrl = url;
     request = new XMLHttpRequest();
     request.open('get', requestUrl, true);
@@ -110,7 +81,7 @@ const scApi = (url, cb) => {
       callback(response);
     };
     request.onerror = function(e) {
-      callback(request.response, e);
+        document.getElementById('display').innerHTML = e;
     };
     request.send();
   };
@@ -120,7 +91,7 @@ const scApi = (url, cb) => {
   return api;       
 };
 
-// Fetching tracks from api.soundcloud.com
+// Fetching tracks from api.soundcloud.com based on user query
 const getSCApiData = (textInput) => {
     
     if (!textInput) {
@@ -140,31 +111,23 @@ const getSCApiData = (textInput) => {
         let url = buildUrl(apiObject.sc, apiObject.search, textInput);
 
          // SC API Service
-        // jsonp(url, (tracks) => {
-        //     tracks.collection.length > 0 ? (stopSpinner(), listTracks(tracks)) : (document.getElementById('display').innerHTML = 
-        //         `<h4>No Groups Found!</h4>`, stopSpinner());
-        // });
-
         scApi(url, (tracks) => {
             tracks.collection.length > 0 ? (stopSpinner(), listTracks(tracks)) : (document.getElementById('display').innerHTML = 
-                `<h4>No Groups Found!</h4>`, stopSpinner());
+                `<h4>${textInput.toUpperCase()}<br> not found!</h4>`, stopSpinner());
         });
     }    
 }
 
 // Fetching more tracks from a specific user
 const getUserTracks = (userid) => {
-
-    // Build URL
     let url = buildUrl(apiObject.sc, apiObject.userTracks, '', userid);
-
     scApi(url, (userTracks) => {
         userTracks.length > 0 ? (stopSpinner(), ulistTracks(userTracks)) : (document.getElementById('display').innerHTML = 
                 `<h4>No Groups Found!</h4>`, stopSpinner());
     });
 }
 
-// Fetching favoriters of a specific track
+// Fetching favoriters of a specific user's track
 const getFavoriters = (trackid) => {
     let url = buildUrl(apiObject.sc, apiObject.favorites, '', trackid);
     scApi(url, (favoriters) => {
@@ -176,20 +139,20 @@ const getFavoriters = (trackid) => {
 // Sort favoriters according to  follower_count & last_name
 const sortByProp = (prop1, prop2) => {
    return function(a,b){
-      if (a[prop1] > b[prop1]){
+      if (a[prop1] > b[prop1]) {
           return 1;
-      } else if( a[prop1] < b[prop1] ){
+      } else if(a[prop1] < b[prop1]) {
           return -1;
       }
 
-      if( a[prop2] > b[prop2]){
+      if(a[prop2] > b[prop2]) {
           return 1;
-      } else if( a[prop2] < b[prop2] ){
+      } else if(a[prop2] < b[prop2]){
           return -1;
       }
       return 0;
    }
-}
+};
 
 // Render users whom favorited a track
 const favoriteUsers = (track, favList) => {
@@ -199,31 +162,39 @@ const favoriteUsers = (track, favList) => {
     favList.sort(sortByProp('followers_count', 'last_name'));
 
     document.getElementById('fav_users_list').innerHTML = '';
+    document.getElementById('display').innerHTML = '';
 
     try {
-            favoredTrack = `<div class=col_header><h2>${favList.length}&nbspUsers Favored Track:&nbsp${track}</h2></div><br>`;
-            favList.forEach((fav) => {
-                string += `<li><div><a href=${fav.permalink_url}>${fav.full_name}</a>`;
+        favoredTrack = `<div class=col_header><h2>Users Favored This Track</h2></div><br>`;
+        favList.forEach((fav) => {
+            string += `<li><div><a href=${fav.permalink_url}>${fav.full_name}</a>`;
 
-                if (fav.artwork_url) {
-                    string += `<iframe src=${fav.artwork_url} scrolling="no" align="middle" 
-                    width="100" height="100" seamless></iframe><br>`    
-                }; 
-                
-                string += `</div></li>`;
-            })
-            document.getElementById('fav_users_list').innerHTML += `${favoredTrack}${string}`;  
+            if (fav.artwork_url) {
+                string += `<iframe src=${fav.artwork_url} scrolling="no" align="middle" 
+                width="100" height="100" seamless></iframe><br>`    
+            }; 
+            
+            string += `</div></li>`;
+        })
+        document.getElementById('fav_users_list').innerHTML += `${favoredTrack}${string}`;  
     }   
     catch(err) {
         document.getElementById('display').innerHTML = err.message;
+        
+        // display the error message for 2 seconds then clear the div
+        window.setTimeout(() => {
+            clearFields();
+        }, 2000);
     }
     show('#favoriters');
 }
 
+// Render tracks from a specific user
 const ulistTracks = (userTrackList) => {
     let user = '',
         string = '';
     document.getElementById('user_tracks_list').innerHTML = '';
+    document.getElementById('display').innerHTML = '';
 
     try {
         user = `<div class=col_header><h2>${userTrackList[0].user.username}'s Tracks</h2></div><br>
@@ -244,18 +215,27 @@ const ulistTracks = (userTrackList) => {
     }   
     catch(err) {
         document.getElementById('display').innerHTML = err.message;
+
+        window.setTimeout(() => {
+            clearFields();
+        }, 2000);
     }
     show('#users');
 }
 
+// Render results from user input query
 const listTracks = (tracks) => {
+    
     let string = '';
     document.getElementById('tracklist').innerHTML = '';
+    document.getElementById('display').innerHTML = '';
 
     try {
         tracks.collection.forEach((track) => {
             if (track.user){
-                string += `<li onclick='getUserTracks(${track.user.id})'><span id='list_title'>Track Title:</span> ${track.title}<br>Username:&nbsp&nbsp ${track.user.username}<br>`;
+                string += `<li onclick='getUserTracks(${track.user.id})'><span id='list_title'>
+                        Track Title:</span> ${track.title}<br>Username:&nbsp&nbsp 
+                        ${track.user.username}<br>`;
                 if (track.tag_list) {
                     string += `tags:&nbsp<em>${track.tag_list}</em><br>`;
                 } 
@@ -265,26 +245,51 @@ const listTracks = (tracks) => {
                     string += `<iframe src=${track.artwork_url} scrolling="no" align="middle" 
                     width="100" height="100" seamless></iframe></li><br>` : string += `</li><br>`;
             }
-        })
-        show("#mood_tracks");
-        document.getElementById('tracklist').innerHTML += string; 
+        }) 
+        document.getElementById('tracklist').innerHTML += string;
     }   
     catch(err) {
         document.getElementById('display').innerHTML = err.message;
+
+        window.setTimeout(() => {
+            clearFields();
+        }, 2000);
     }
-    show('#sc');
+
+    if (tracks.collection.length > 1) {
+        show('#mood_tracks');
+        show('#sc');
+    } else {
+        document.getElementById('display').innerHTML = `No tracks found`;
+    }  
+}
+
+// Display the spinner before JSONP request
+const startSpinner = () =>  {
+    document.getElementById("loader").style.visibility = "visible";
+}
+
+// Hide the spinner before rendering the data to the dom
+const stopSpinner = () => {
+    document.getElementById("loader").style.visibility = "hidden";
 }
 
 // Modify CSS rules when necessary 
 const css = (selector, property, value) => {
-    for (let i = 0; i < document.styleSheets.length; i++) {//Loop through all styles   
+
+    //Loop through all styles   
+    for (let i = 0; i < document.styleSheets.length; i++) {
+
         //Try add rule
         try { document.styleSheets[i].insertRule(
             selector + ' {'+property+':'+value+'}', 
             document.styleSheets[i].cssRules.length);
-        } catch(err) {
-            try { document.styleSheets[i].addRule(selector, property+':'+value);
-        } catch(err) {}}//IE
+        } 
+        catch(err) {
+            try { 
+                document.styleSheets[i].addRule(selector, property+':'+value);
+        } 
+        catch(err) {}}//IE
     }
 }
 

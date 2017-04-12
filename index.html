@@ -17,19 +17,18 @@
 				<table>
 					<tbody>
 						<tr>
-							<td>Let's find some tracks that suits your mood!</td>
+							<td>Let's find some tracks that suit your mood!</td>
 						</tr>
 						<tr>
-							<td>In one word, tell me how you feel...</td>
+							<td>In a word or two, tell me how you feel...</td>
 						</tr>
-						<tr>
+						<tr></tr>
+						<tr></tr>
+						<tr></tr>
 							<td>
-								<input id='user_input' type='text' maxlength='60' placeholder='ex. happy/sad/anxious' autofocus>	
-								<button id='submit_btn' class='color-option'>Fetch Tracks</button>
+								<input id=user_input type='text' maxlength='60' placeholder='ex. happy/sad/anxious' autofocus>	
+								<button id=submit_btn class='color-option'>Fetch Tracks</button>
 							</td>
-						</tr>
-						<tr>
-							<div id='display'></div>
 						</tr>
 					</tbody>
 				</table>
@@ -39,30 +38,34 @@
 			<tbody>
 				<tr>
 					<th>
-						<div id='sc'>
+						<div id=sc class=results>
 							<h2 id=mood_tracks>Here are some tracks according to your mood search
 								<h4>click a track to see more tracks from this user</h4>
 							</h2>
-							<ul id='tracklist'></ul>
+							<ul id=tracklist></ul>
 						</div>				
 					</th>
 					<th>
-						<div id=users>
-							<ul id='user_tracks_list'></ul>
+						<div id=users class=results>
+							<ul id=user_tracks_list></ul>
 						</div>				
 					</th>
 					<th>
-						<div id=favoriters>
-							<ul id='fav_users_list'></ul>
+						<div id=favoriters class=results>
+							<ul id=fav_users_list></ul>
 						</div>
 					</th>
+					<tr>
+						<div id=display></div>
+					</tr>
 				</tr>
 			</tbody>
 		</table>	
 		<br><br>
-		<div id='images'></div>
+
+		<div id=images></div>
 		<!-- Spinner -->
-    <div id="loader"></div>
+    <div id=loader></div>
 	</div>
 	
 	<script src='js/script.js'></script>

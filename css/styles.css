@@ -62,9 +62,20 @@ button {
     font-size:10px;
 }
 
-#inputSection {
+#inputSection, #display {
 	color: white;
 	margin: 0 22.5% 20px 22.5%;
+}
+
+input {
+  font-size: .9em;
+}
+
+#display {
+  margin-left: 25%;
+  margin-right: 25%;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 #sc {
